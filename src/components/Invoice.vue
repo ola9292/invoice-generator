@@ -216,7 +216,7 @@
     .btn{
         padding: 8px 16px;
         border: none;
-        background-color: black;
+        background-color: #009e74;
         color: white;
         text-transform: capitalize;
     }
