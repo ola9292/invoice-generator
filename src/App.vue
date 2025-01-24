@@ -13,5 +13,7 @@
 <style scoped>
   .main-container{
     font-family: sans-serif;
+    touch-action: manipulation; /* Prevent unintended gestures */
+    user-select: none;      /* Avoid text selection */
   }
 </style>
