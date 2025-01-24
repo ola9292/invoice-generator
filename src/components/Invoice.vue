@@ -97,7 +97,7 @@
     <Transition name="slide-fade">
     <div v-if="step == 1" class="container">
         <div class="flex-container-col">
-            <input class="input" type="date" v-model="invoice.date" placeholder="Name">
+            <input class="input" type="date" v-model="invoice.date" placeholder="Date">
             <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
         </div>
         <h2>Billing Information</h2>
@@ -234,7 +234,10 @@
     padding: 8px;
     }
     .container{
-        overflow-x: auto;
+        font-size: 16px;        
+        touch-action: manipulation;
+        user-select: none; 
+        overflow-x: scroll;
         margin: auto;
         padding: 20px;
         width: 90%;
