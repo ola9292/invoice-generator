@@ -239,7 +239,7 @@
         font-size: 16px;        
         touch-action: manipulation;
         user-select: none; 
-        /* overflow-x: scroll; */
+        overflow-x: scroll;
         margin: auto;
         padding: 20px;
         width: 90%;
@@ -247,7 +247,7 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     .container-2{
-        /* overflow-x: scroll; */
+        overflow-x: scroll;
         padding: 20px;
     }
     .flex-container-col{
