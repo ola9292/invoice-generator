@@ -3,7 +3,7 @@
     import html2pdf from 'html2pdf.js' 
 
     const step = ref(1)
-    //chnage step
+    //change step
     const preview = () => {
         step.value = 2
     }
@@ -11,10 +11,21 @@
         step.value = 1
     }
     const discount = ref(0);
+    const bill_to = ref({
+        name : null,
+        address : null,
+        company_address: null,
+        email: null,  
+    });
+    const ship_to = ref({
+        name : null,
+        address : null,
+        company_address: null,
+        email: null,
+    })
     const invoice = ref({
-        'client_name' : '',
-        'client_address' : ''
-        
+        date: null,
+        invoice_no : null
     })
     const totalWithoutDiscount = ref(0)
     const items = ref([])
@@ -85,10 +96,24 @@
 <template>
     <Transition name="slide-fade">
     <div v-if="step == 1" class="container">
-        <h2>Client Information</h2>
         <div class="flex-container-col">
-            <input class="input" type="text" v-model="invoice.client_name" placeholder="Client Name">
-            <input class="input" type="text" v-model="invoice.client_address" placeholder="Client Address">
+            <input class="input" type="date" v-model="invoice.date" placeholder="Name">
+            <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
+        </div>
+        <h2>Billing Information</h2>
+        <div class="flex-container-col">
+            <input class="input" type="text" v-model="bill_to.name" placeholder="Name">
+            <input class="input" type="text" v-model="bill_to.address" placeholder="Address">
+            <input class="input" type="text" v-model="bill_to.company_address" placeholder="Company Address">
+            <input class="input" type="email" v-model="bill_to.email" placeholder="Email">
+        </div>
+
+        <h2>Shipping Information</h2>
+        <div class="flex-container-col">
+            <input class="input" type="text" v-model="ship_to.name" placeholder="Name">
+            <input class="input" type="text" v-model="ship_to.address" placeholder="Address">
+            <input class="input" type="text" v-model="ship_to.company_address" placeholder="Company Address">
+            <input class="input" type="email" v-model="ship_to.email" placeholder="Email">
         </div>
       
         <h2>Invoice Items</h2>
@@ -135,6 +160,26 @@
         <div class="container-2">
             
             <div id="invoice-preview">
+                <div class="date_no preview">
+                    <p v-if="invoice.date"><bold>Date:</bold> {{ invoice.date }}</p>
+                    <p v-if="invoice.invoice_no"><bold>Invoice No:</bold> {{ invoice.invoice_no }}</p>
+                </div>
+                <div class="flex-container-row">
+                   <div>
+                    <h2>Bill To</h2>
+                    <p>{{ bill_to.name }}</p>
+                    <p>{{ bill_to.email }}</p>
+                    <p>{{ bill_to.address }}</p>
+                    <p>{{ bill_to.company_address }}</p>
+                   </div>
+                   <div>
+                    <h2>Ship To</h2>
+                    <p>{{ ship_to.name }}</p>
+                    <p>{{ ship_to.email }}</p>
+                    <p>{{ ship_to.address }}</p>
+                    <p>{{ ship_to.company_address }}</p>
+                   </div>
+                </div>
                 <h2>Invoice</h2>
                 <p>{{ invoice.client_name }}</p>
                 <p>{{ invoice.client_address }}</p>
@@ -220,9 +265,13 @@
         color: white;
         text-transform: capitalize;
     }
-    .preview{
+    .preview, .date_no{
         display: flex;
         justify-content: flex-end;
+    }
+    .date_no{
+        flex-direction: column;
+        align-items: flex-end;
     }
     .summary{
         margin: 15px 0;
