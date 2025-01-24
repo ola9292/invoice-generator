@@ -160,6 +160,7 @@
         <div class="container-2">
             
             <div id="invoice-preview">
+                <h1>INVOICE</h1>
                 <div class="date_no preview">
                     <p v-if="invoice.date"><bold>Date:</bold> {{ invoice.date }}</p>
                     <p v-if="invoice.invoice_no"><bold>Invoice No:</bold> {{ invoice.invoice_no }}</p>
@@ -232,12 +233,13 @@
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    
     }
     .container{
         font-size: 16px;        
         touch-action: manipulation;
         user-select: none; 
-        overflow-x: scroll;
+        /* overflow-x: scroll; */
         margin: auto;
         padding: 20px;
         width: 90%;
@@ -245,7 +247,7 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     .container-2{
-        overflow-x: auto;
+        /* overflow-x: scroll; */
         padding: 20px;
     }
     .flex-container-col{
