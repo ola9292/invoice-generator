@@ -25,7 +25,8 @@
     })
     const invoice = ref({
         date: null,
-        invoice_no : null
+        invoice_no : null,
+        name:''
     })
     const totalWithoutDiscount = ref(0)
     const items = ref([])
@@ -77,6 +78,10 @@
         return `£${grandTotalSum.toFixed(2)}`
     })
 
+    // const getSelectedFile = (event) =>{
+    //     console.log(event.target.files[0])
+    // }
+
     // Add this new download pdf function
     const downloadPDF = () => {
         const element = document.getElementById('invoice-preview')
@@ -91,14 +96,19 @@
         
         html2pdf().from(element).set(options).save()
     }
+
 </script>
 
 <template>
     <Transition name="slide-fade">
     <div v-if="step == 1" class="container">
+        <!-- <div>
+            <input type="file" @change="getSelectedFile"/>
+        </div> -->
         <div class="flex-container-col">
             <input class="input" type="date" v-model="invoice.date" placeholder="Date">
             <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
+            <input class="input" type="text" v-model="invoice.name" placeholder="Your Name">
         </div>
         <h2>Billing Information</h2>
         <div class="flex-container-col">
@@ -162,6 +172,7 @@
             <div id="invoice-preview">
                 <h1>INVOICE</h1>
                 <div class="date_no preview">
+                    <p v-if="invoice.name">Issued by: {{ invoice.name }}</p>
                     <p v-if="invoice.date"><bold>Date:</bold> {{ invoice.date }}</p>
                     <p v-if="invoice.invoice_no"><bold>Invoice No:</bold> {{ invoice.invoice_no }}</p>
                 </div>
