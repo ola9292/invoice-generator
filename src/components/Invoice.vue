@@ -115,8 +115,8 @@ const downloadPDF = () => {
 <template>
     <Transition name="slide-fade">
     <div v-if="step == 1" class="container">
-        <div>
-            <input class="input" 
+        <div style="margin-bottom: 10px;">
+            <input class="" 
                     type="file" 
                     accept="image/*" 
                     ref="fileInput"
