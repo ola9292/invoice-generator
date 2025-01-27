@@ -3,6 +3,8 @@
     import html2pdf from 'html2pdf.js' 
 
     const step = ref(1)
+    const imageUrl = ref(null);
+    const fileInput = ref('')
     //change step
     const preview = () => {
         step.value = 2
@@ -78,33 +80,52 @@
         return `£${grandTotalSum.toFixed(2)}`
     })
 
-    // const getSelectedFile = (event) =>{
-    //     console.log(event.target.files[0])
-    // }
 
-    // Add this new download pdf function
-    const downloadPDF = () => {
-        const element = document.getElementById('invoice-preview')
-        
-        const options = {
-            margin: 1,
-            filename: `invoice-${invoice.value.client_name}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        }
-        
-        html2pdf().from(element).set(options).save()
+//logo upload
+const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if(file){
+        imageUrl.value = URL.createObjectURL(file); 
     }
+}
+//remove logo
+const removeLogo = () => {
+    imageUrl.value = null
+    fileInput.value.value = '' 
+    URL.revokeObjectURL(imageUrl.value)
+}
+
+// Add this new download pdf function
+const downloadPDF = () => {
+    const element = document.getElementById('invoice-preview')
+    
+    const options = {
+        margin: 1,
+        filename: `invoice-${invoice.value.client_name}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    }
+    
+    html2pdf().from(element).set(options).save()
+}
 
 </script>
 
 <template>
     <Transition name="slide-fade">
     <div v-if="step == 1" class="container">
-        <!-- <div>
-            <input type="file" @change="getSelectedFile"/>
-        </div> -->
+        <div>
+            <input class="input" 
+                    type="file" 
+                    accept="image/*" 
+                    ref="fileInput"
+                    @change="handleImageUpload">
+        </div>
+        <div class="logo-cont" v-if="imageUrl != null">
+            <img :src="imageUrl" width="70"/>
+            <button @click="removeLogo"><img src="../assets/cancel.png" width="10"/></button>
+        </div>
         <div class="flex-container-col">
             <input class="input" type="date" v-model="invoice.date" placeholder="Date">
             <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
@@ -171,10 +192,15 @@
             
             <div id="invoice-preview">
                 <h1>INVOICE</h1>
+                <div>
+                    <div v-if="imageUrl != null">
+                        <img :src="imageUrl" width="70"/>
+                    </div>
+                </div>
                 <div class="date_no preview">
                     <p v-if="invoice.name">Issued by: {{ invoice.name }}</p>
-                    <p v-if="invoice.date"><bold>Date:</bold> {{ invoice.date }}</p>
-                    <p v-if="invoice.invoice_no"><bold>Invoice No:</bold> {{ invoice.invoice_no }}</p>
+                    <p v-if="invoice.date"><strong>Date:</strong> {{ invoice.date }}</p>
+                    <p v-if="invoice.invoice_no"><strong>Invoice No:</strong> {{ invoice.invoice_no }}</p>
                 </div>
                 <div class="flex-container-row">
                    <div>
@@ -299,6 +325,17 @@
     }
     .summary > p{
         margin: 0;
+    }
+    .logo-cont{
+        position:relative
+    }
+    .logo-cont > button{
+        position: absolute;
+        top:0;
+        left:80px;
+        border-radius: 50%;
+        border:none;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     /*
   Enter and leave animations can use different
