@@ -211,11 +211,11 @@ const downloadPDF = () => {
                     <p>{{ bill_to.company_address }}</p>
                    </div>
                    <div>
-                    <h2>Ship To</h2>
-                    <p>{{ ship_to.name }}</p>
-                    <p>{{ ship_to.email }}</p>
-                    <p>{{ ship_to.address }}</p>
-                    <p>{{ ship_to.company_address }}</p>
+                    <h2 style="text-align: right;">Ship To</h2>
+                    <p style="text-align: right;">{{ ship_to.name }}</p>
+                    <p style="text-align: right;">{{ ship_to.email }}</p>
+                    <p style="text-align: right;">{{ ship_to.address }}</p>
+                    <p style="text-align: right;">{{ ship_to.company_address }}</p>
                    </div>
                 </div>
                 <h2>Invoice</h2>
@@ -223,7 +223,7 @@ const downloadPDF = () => {
                 <p>{{ invoice.client_address }}</p>
 
                 <table>
-                    <tr>
+                    <tr style="background-color: #595959;color:#ffffff">
                         <td>Service</td>
                         <td>Description</td>
                         <td>Quantity</td>
