@@ -5,6 +5,7 @@
     const step = ref(1)
     const imageUrl = ref(null);
     const fileInput = ref('')
+    const currency = ref('£')
     //change step
     const preview = () => {
         step.value = 2
@@ -77,7 +78,7 @@
         totalWithoutDiscount.value = grandTotal
         if (discount.value < 0){ discount.value} ; 
         let grandTotalSum = grandTotal - (grandTotal * (discount.value/100))
-        return `£${grandTotalSum.toFixed(2)}`
+        return `${grandTotalSum.toFixed(2)}`
     })
 
 
@@ -127,6 +128,11 @@ const downloadPDF = () => {
             <button @click="removeLogo"><img src="../assets/cancel.png" width="10"/></button>
         </div>
         <div class="flex-container-col">
+            <select class="input" id="" v-model="currency">
+                <option value="$">$</option>
+                <option value="£">£</option>
+                <option value="₦">₦</option>
+            </select>
             <input class="input" type="date" v-model="invoice.date" placeholder="Date">
             <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
             <input class="input" type="text" v-model="invoice.name" placeholder="Your Name">
@@ -175,7 +181,7 @@ const downloadPDF = () => {
 
         <div>
             <h2>Total Amount</h2>
-            <h3>{{ getTotal }}</h3>
+            <h3>{{ currency }}{{ getTotal }}</h3>
             
         </div>
 
@@ -239,10 +245,10 @@ const downloadPDF = () => {
                     </tr>
                 </table>
                 <div class="summary">
-                    <p>paid: £0</p>
+                    <p>paid: {{ currency }}0</p>
                     <p>Subtotal: {{ totalWithoutDiscount }}</p>
                     <p>Discount: {{  `${discount}%`}}</p>
-                    <p>Total to pay: {{ getTotal }}</p>
+                    <p>Total to pay: {{ currency }}{{ getTotal }}</p>
                 </div>
             </div>
             
