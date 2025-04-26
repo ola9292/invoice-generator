@@ -1,6 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import html2pdf from 'html2pdf.js' 
+    import Landing from './Landing.vue';
 
     const step = ref(1)
     const imageUrl = ref(null);
@@ -114,7 +115,9 @@ const downloadPDF = () => {
 </script>
 
 <template>
+        
     <Transition name="slide-fade">
+    
     <div v-if="step == 1" class="container">
         <div style="margin-bottom: 10px;">
             <input class="" 
@@ -128,14 +131,18 @@ const downloadPDF = () => {
             <button @click="removeLogo"><img src="../assets/cancel.png" width="10"/></button>
         </div>
         <div class="flex-container-col">
+            <label for="">Currency</label>
             <select class="input" id="" v-model="currency">
                 <option value="$">$</option>
                 <option value="£">£</option>
                 <option value="₦">₦</option>
             </select>
+            <label for="">Date</label>
             <input class="input" type="date" v-model="invoice.date" placeholder="Date">
+            <label for="">Invoice No</label>
             <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
-            <input class="input" type="text" v-model="invoice.name" placeholder="Your Name">
+            <label for="">Name</label>
+            <input class="input" type="text" v-model="invoice.name" placeholder="John Doe">
         </div>
         <h2>Billing Information</h2>
         <div class="flex-container-col">
