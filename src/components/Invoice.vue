@@ -154,24 +154,27 @@ const downloadPDF = () => {
         </div>
       
         <h2>Invoice Items</h2>
-        <table>
-            <tr>
-                <th>Service</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Unit price</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
-            <tr v-for="(item, index) in items" :key="index">
-                <td><input type="text" v-model="item.service"></td>
-                <td><input type="text" v-model="item.description"></td>
-                <td><input type="text" v-model.number="item.quantity" @input="calculateTotal(index)" @blur="validateInputs"></td>
-                <td><input type="text" v-model.number="item.unit_price" @input="calculateTotal(index)" @blur="validateInputs"></td>
-                <td>{{ item.total }}</td>
-                <td><button @click="removeItem(index)">remove</button></td>
-            </tr>
-        </table>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr>
+                    <th>Service</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Unit price</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+                <tr v-for="(item, index) in items" :key="index">
+                    <td><input type="text" v-model="item.service"></td>
+                    <td><input type="text" v-model="item.description"></td>
+                    <td><input type="text" v-model.number="item.quantity" @input="calculateTotal(index)" @blur="validateInputs"></td>
+                    <td><input type="text" v-model.number="item.unit_price" @input="calculateTotal(index)" @blur="validateInputs"></td>
+                    <td>{{ item.total }}</td>
+                    <td><button @click="removeItem(index)">remove</button></td>
+                </tr>
+            </table>
+        </div>
+       
         <button class="btn" @click="addItem">add item</button>
 
         <h2>Invoice Summary</h2>
