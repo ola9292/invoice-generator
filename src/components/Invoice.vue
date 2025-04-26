@@ -231,22 +231,25 @@ const downloadPDF = () => {
                 <p>{{ invoice.client_name }}</p>
                 <p>{{ invoice.client_address }}</p>
 
-                <table>
-                    <tr style="background-color: #595959;color:#ffffff">
-                        <td>Service</td>
-                        <td>Description</td>
-                        <td>Quantity</td>
-                        <td>Unit price</td>
-                        <td>Total</td>
-                    </tr>
-                    <tr v-for="(item, index) in items" :key="index">
-                        <td>{{ item.service }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.unit_price }}</td>
-                        <td>{{ item.total }}</td>
-                    </tr>
-                </table>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <tr style="background-color: #595959;color:#ffffff">
+                            <td>Service</td>
+                            <td>Description</td>
+                            <td>Quantity</td>
+                            <td>Unit price</td>
+                            <td>Total</td>
+                        </tr>
+                        <tr v-for="(item, index) in items" :key="index">
+                            <td>{{ item.service }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.unit_price }}</td>
+                            <td>{{ item.total }}</td>
+                        </tr>
+                    </table>
+                </div>
+                
                 <div class="summary">
                     <p>paid: {{ currency }}0</p>
                     <p>Subtotal: {{ totalWithoutDiscount }}</p>
