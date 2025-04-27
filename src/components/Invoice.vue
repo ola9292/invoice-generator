@@ -1,7 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import html2pdf from 'html2pdf.js' 
-    import Landing from './Landing.vue';
+    
 
     const step = ref(1)
     const imageUrl = ref(null);
@@ -14,6 +14,7 @@
     const goBack = () => {
         step.value = 1
     }
+ 
     const discount = ref(0);
     const bill_to = ref({
         name : null,
@@ -115,92 +116,91 @@ const downloadPDF = () => {
 </script>
 
 <template>
-        
     <Transition name="slide-fade">
-    
-    <div v-if="step == 1" class="container">
-        <div style="margin-bottom: 10px;">
-            <input class="" 
-                    type="file" 
-                    accept="image/*" 
-                    ref="fileInput"
-                    @change="handleImageUpload">
-        </div>
-        <div class="logo-cont" v-if="imageUrl != null">
-            <img :src="imageUrl" width="70"/>
-            <button @click="removeLogo"><img src="../assets/cancel.png" width="10"/></button>
-        </div>
-        <div class="flex-container-col">
-            <label for="">Currency</label>
-            <select class="input" id="" v-model="currency">
-                <option value="$">$</option>
-                <option value="£">£</option>
-                <option value="₦">₦</option>
-            </select>
-            <label for="">Date</label>
-            <input class="input" type="date" v-model="invoice.date" placeholder="Date">
-            <label for="">Invoice No</label>
-            <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
-            <label for="">Name</label>
-            <input class="input" type="text" v-model="invoice.name" placeholder="John Doe">
-        </div>
-        <h2>Billing Information</h2>
-        <div class="flex-container-col">
-            <input class="input" type="text" v-model="bill_to.name" placeholder="Name">
-            <input class="input" type="text" v-model="bill_to.address" placeholder="Address">
-            <input class="input" type="text" v-model="bill_to.company_address" placeholder="Company Address">
-            <input class="input" type="email" v-model="bill_to.email" placeholder="Email">
-        </div>
+        <div v-if="step == 1" class="container">
+            <h1>Create Invoice</h1>
+            <div style="margin-bottom: 10px;">
+                <input class="" 
+                        type="file" 
+                        accept="image/*" 
+                        ref="fileInput"
+                        @change="handleImageUpload">
+            </div>
+            <div class="logo-cont" v-if="imageUrl != null">
+                <img :src="imageUrl" width="70"/>
+                <button @click="removeLogo"><img src="../assets/cancel.png" width="10"/></button>
+            </div>
+            <div class="flex-container-col">
+                <label for="">Currency</label>
+                <select class="input" id="" v-model="currency">
+                    <option value="$">$</option>
+                    <option value="£">£</option>
+                    <option value="₦">₦</option>
+                </select>
+                <label for="">Date</label>
+                <input class="input" type="date" v-model="invoice.date" placeholder="Date">
+                <label for="">Invoice No</label>
+                <input class="input" type="number" v-model="invoice.invoice_no" placeholder="Invoice Number">
+                <label for="">Name</label>
+                <input class="input" type="text" v-model="invoice.name" placeholder="John Doe">
+            </div>
+            <h2>Billing Information</h2>
+            <div class="flex-container-col">
+                <input class="input" type="text" v-model="bill_to.name" placeholder="Name">
+                <input class="input" type="text" v-model="bill_to.address" placeholder="Address">
+                <input class="input" type="text" v-model="bill_to.company_address" placeholder="Company Address">
+                <input class="input" type="email" v-model="bill_to.email" placeholder="Email">
+            </div>
 
-        <h2>Shipping Information</h2>
-        <div class="flex-container-col">
-            <input class="input" type="text" v-model="ship_to.name" placeholder="Name">
-            <input class="input" type="text" v-model="ship_to.address" placeholder="Address">
-            <input class="input" type="text" v-model="ship_to.company_address" placeholder="Company Address">
-            <input class="input" type="email" v-model="ship_to.email" placeholder="Email">
-        </div>
-      
-        <h2>Invoice Items</h2>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr>
-                    <th>Service</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Unit price</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-                <tr v-for="(item, index) in items" :key="index">
-                    <td><input type="text" v-model="item.service"></td>
-                    <td><input type="text" v-model="item.description"></td>
-                    <td><input type="text" v-model.number="item.quantity" @input="calculateTotal(index)" @blur="validateInputs"></td>
-                    <td><input type="text" v-model.number="item.unit_price" @input="calculateTotal(index)" @blur="validateInputs"></td>
-                    <td>{{ item.total }}</td>
-                    <td><button @click="removeItem(index)">remove</button></td>
-                </tr>
-            </table>
-        </div>
-       
-        <button class="btn" @click="addItem">add item</button>
+            <h2>Shipping Information</h2>
+            <div class="flex-container-col">
+                <input class="input" type="text" v-model="ship_to.name" placeholder="Name">
+                <input class="input" type="text" v-model="ship_to.address" placeholder="Address">
+                <input class="input" type="text" v-model="ship_to.company_address" placeholder="Company Address">
+                <input class="input" type="email" v-model="ship_to.email" placeholder="Email">
+            </div>
+        
+            <h2>Invoice Items</h2>
+            <div style="overflow-x:auto;">
+                <table>
+                    <tr>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr v-for="(item, index) in items" :key="index">
+                        <td><input type="text" v-model="item.service"></td>
+                        <td><input type="text" v-model="item.description"></td>
+                        <td><input type="text" v-model.number="item.quantity" @input="calculateTotal(index)" @blur="validateInputs"></td>
+                        <td><input type="text" v-model.number="item.unit_price" @input="calculateTotal(index)" @blur="validateInputs"></td>
+                        <td>{{ item.total }}</td>
+                        <td><button @click="removeItem(index)">remove</button></td>
+                    </tr>
+                </table>
+            </div>
+        
+            <button class="btn" @click="addItem">add item</button>
 
-        <h2>Invoice Summary</h2>
-        <label for="">Discount Amount: </label>
-        <input type="number" v-model="discount" @blur="validateInputs">
-        <p v-if="discount < 0" style="color: red;">Discount cannot be negative!</p>
+            <h2>Invoice Summary</h2>
+            <label for="">Discount Amount: </label>
+            <input type="number" v-model="discount" @blur="validateInputs">
+            <p v-if="discount < 0" style="color: red;">Discount cannot be negative!</p>
 
-        <div>
-            <h2>Total Amount</h2>
-            <h3>{{ currency }}{{ getTotal }}</h3>
-            
-        </div>
+            <div>
+                <h2>Total Amount</h2>
+                <h3>{{ currency }}{{ getTotal }}</h3>
+                
+            </div>
 
-        <div class="preview">
-            <button class="btn" @click="preview" v-if="step == 1">see preview</button>
+            <div class="preview">
+                <button class="btn" @click="preview" v-if="step == 1">see preview</button>
+            </div>
+        
+        
         </div>
-       
-       
-    </div>
 </Transition>
 <Transition name="slide-fade-reverse">
     <div v-if="step == 2">
@@ -296,15 +296,17 @@ const downloadPDF = () => {
         touch-action: manipulation;
         user-select: none; 
         overflow-x: scroll;
-        margin: auto;
+        margin: 30px auto;
         padding: 20px;
         width: 90%;
         max-width: 900px;
+        background-color: #fff;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     .container-2{
         overflow-x: scroll;
         padding: 20px;
+        background-color: #fff;
     }
     .flex-container-col{
         display: flex;
@@ -391,5 +393,7 @@ const downloadPDF = () => {
   transform: translateX(-50px); /* Opposite direction */
   opacity: 0;
 }
+
+
 
 </style>
